@@ -84,7 +84,7 @@ Here's an example of my output for this step.
 The code for my perspective transform includes a function called `perspective_transform()`, which appears in 7th code cell in the Jupyter notebook.  The `perspective_transform()` function takes as inputs an image (`img`), as well as source (`src`) and destination (`dst`) points.  I chose the hardcode the source and destination points in the following manner:
 
 ```python
-src_pts = np.float32([[595, 450], [200, 720], [1100, 720], [685, 450]])
+src_pts = np.float32([[595, 450], [200, 720], [1080, 720], [685, 450]])
 dst_pts = np.float32([[300, 0], [300, 720], [980, 720], [980, 0]])
 ```
 This resulted in the following source and destination points:
@@ -93,7 +93,7 @@ This resulted in the following source and destination points:
 |:-------------:|:-------------:| 
 | 595, 450      | 300, 0        | 
 | 200, 720      | 300, 720      |
-| 1100, 720     | 980, 720      |
+| 1080, 720     | 980, 720      |
 | 685, 450      | 980, 0        |
 
 I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
@@ -132,7 +132,7 @@ The next helper function I wrote is `find_curvature()`, which located in the cod
 This function takes polynomial fits from the previous step and calculates the curvatures for each lane lines. One thing to note is that the x, y coefficients were converted to meters from pixels before the calculation.
 
 Equation for radius if curvature:
-$R_{curve} = \frac{(1+(2Ay+B)^2)^{3/2}}{|2A|}$
+$$ R_{curve} = \frac{(1+(2Ay+B)^2)^{3/2}}{|2A|} $$
 
 #### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
