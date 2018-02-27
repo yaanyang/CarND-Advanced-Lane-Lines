@@ -66,20 +66,29 @@ The first one is `camera_calibration()` function (in the 5th code cell), where I
 #### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 
 Next is `color_gradient_threshold()` function (in the 6th code cell). I used a combination of color and gradient thresholds to generate a binary image.
-1. I first fed in an image.
-2. Gradient thresholding:
+#### 1. I first fed in an image.
+#### 2. Gradient thresholding:
 2a. Coverted image to HLS color space.
+
 2b. Then I seperated light channel and used it for Sobel to take derivative in horizontal direction.
+
 2c. A binary image was obtained by filtering the scaled Sobel derivative within (20, 100) range.
-3. White color thresholding:
+
+#### 3. White color thresholding:
 3a. Coverted image to Luv color space.
+
 3b. Then I seperated l channel and used it for picking up white color.
+
 3c. A binary image was obtained by filtering the luv_l_channel within (220, 255) range.
-4. Yellow color thresholding:
+
+#### 4. Yellow color thresholding:
 4a. Coverted image to Lab color space.
+
 4b. Then I seperated b channel and used it for picking up yellow color.
+
 4c. A binary image was obtained by filtering the lab_b_channel within (155, 210) range.
-5. Finally, I combined 3 binary images from 2., 3. and 4. for gradient and color thresholding.
+
+#### 5. Finally, I combined 3 binary images from 2., 3. and 4. for gradient and color thresholding.
 
 Here's an example of my output for this step.
 
