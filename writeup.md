@@ -66,14 +66,20 @@ The first one is `camera_calibration()` function (in the 5th code cell), where I
 #### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 
 Next is `color_gradient_threshold()` function (in the 6th code cell). I used a combination of color and gradient thresholds to generate a binary image.
-1. I first fed in an image and converted it to HLS color space.
+1. I first fed in an image.
 2. Gradient thresholding:
-    2.a Then I seperated light channel and used it for Sobel to take derivative in horizontal direction.
-    2.b A binary image was obtained by filtering the scaled Sobel derivative within (20, 100) range.
-3. Color thresholding:
-    3.a I first defined color ranges for white and yellow (the colors for lane lines) individually and created white and yellow masks.
-    3.b Then conbined 2 masks with the HLS image to generate 2nd binary image.
-4. Finally, I combined 2 binary images from 2. and 3. for gradient and color thresholding.
+2a. Coverted image to HLS color space.
+2b. Then I seperated light channel and used it for Sobel to take derivative in horizontal direction.
+2c. A binary image was obtained by filtering the scaled Sobel derivative within (20, 100) range.
+3. White color thresholding:
+3a. Coverted image to Luv color space.
+3b. Then I seperated l channel and used it for picking up white color.
+3c. A binary image was obtained by filtering the luv_l_channel within (220, 255) range.
+4. Yellow color thresholding:
+4a. Coverted image to Lab color space.
+4b. Then I seperated b channel and used it for picking up yellow color.
+4c. A binary image was obtained by filtering the lab_b_channel within (155, 210) range.
+5. Finally, I combined 3 binary images from 2., 3. and 4. for gradient and color thresholding.
 
 Here's an example of my output for this step.
 
@@ -84,7 +90,7 @@ Here's an example of my output for this step.
 The code for my perspective transform includes a function called `perspective_transform()`, which appears in 7th code cell in the Jupyter notebook.  The `perspective_transform()` function takes as inputs an image (`img`), as well as source (`src`) and destination (`dst`) points.  I chose the hardcode the source and destination points in the following manner:
 
 ```python
-src_pts = np.float32([[595, 450], [200, 720], [1100, 720], [685, 450]])
+src_pts = np.float32([[595, 450], [200, 720], [1080, 720], [685, 450]])
 dst_pts = np.float32([[300, 0], [300, 720], [980, 720], [980, 0]])
 ```
 This resulted in the following source and destination points:
@@ -93,7 +99,7 @@ This resulted in the following source and destination points:
 |:-------------:|:-------------:| 
 | 595, 450      | 300, 0        | 
 | 200, 720      | 300, 720      |
-| 1100, 720     | 980, 720      |
+| 1080, 720     | 980, 720      |
 | 685, 450      | 980, 0        |
 
 I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
@@ -132,7 +138,7 @@ The next helper function I wrote is `find_curvature()`, which located in the cod
 This function takes polynomial fits from the previous step and calculates the curvatures for each lane lines. One thing to note is that the x, y coefficients were converted to meters from pixels before the calculation.
 
 Equation for radius if curvature:
-$R_{curve} = \frac{(1+(2Ay+B)^2)^{3/2}}{|2A|}$
+$ R_{curve} = \frac{(1+(2Ay+B)^2)^{3/2}}{|2A|} $
 
 #### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
